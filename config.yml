@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  build-windows:
+    docker:
+      - image: cimg/windows:2022  # Official Windows container image
+    steps:
+      - checkout
+
+      # Enable SSH debug mode
+      - run:
+          name: Enable SSH for debugging
+          command: |
+            echo "SSH debug enabled. CircleCI will give temporary credentials when job starts."
+
+      # Example build steps
+      - run:
+          name: Install dependencies
+          command: |
+            choco install git -y
+            choco install nodejs -y
+
+      - run:
+          name: Run build
+          command: |
+            echo "Running build..."
+            # Replace with your build commands
+            msbuild MySolution.sln /p:Configuration=Debug
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+workflows:
+  version: 2
+  build-and-debug:
+    jobs:
+      - build-windows:
+          ssh: true   # <--- this enables SSH into the container for debugging
