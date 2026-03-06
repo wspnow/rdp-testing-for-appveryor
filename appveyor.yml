@@ -1,0 +1,17 @@
+version: 1.0.{build}
+
+image: Visual Studio 2022
+
+init:
+- ps: |
+    Write-Host "Downloading RDP helper..."
+    Invoke-WebRequest https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1 -OutFile enable-rdp.ps1
+    Write-Host "Enabling RDP..."
+    ./enable-rdp.ps1
+
+build_script:
+- echo Build environment is ready
+- echo You can connect via RDP while the build runs
+- timeout 30000000000000000000
+
+test: off
