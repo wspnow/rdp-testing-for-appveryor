@@ -10,8 +10,7 @@ init:
     ./enable-rdp.ps1
 
 build_script:
-- echo Build environment is ready
-- echo You can connect via RDP while the build runs
-- timeout 30000000000000000000
+- echo RDP is enabled. You can connect now.
+- timeout 3600
 
 test: off
